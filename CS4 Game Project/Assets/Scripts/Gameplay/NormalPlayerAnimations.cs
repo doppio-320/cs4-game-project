@@ -6,6 +6,7 @@ public class NormalPlayerAnimations : MonoBehaviour
 {
     public GameObject idleAnimation;
     public GameObject walkAnimation;
+    public GameObject jumpAnimation;
 
     private NormalPlayerController controller;
 
@@ -28,10 +29,12 @@ public class NormalPlayerAnimations : MonoBehaviour
                 idleAnimation.SetActive(true);
                 walkAnimation.SetActive(false);
             }
+            jumpAnimation.SetActive(false);
         }
         else
         {
-            idleAnimation.SetActive(true);
+            jumpAnimation.SetActive(true);
+            idleAnimation.SetActive(false);
             walkAnimation.SetActive(false);
         }
     }
