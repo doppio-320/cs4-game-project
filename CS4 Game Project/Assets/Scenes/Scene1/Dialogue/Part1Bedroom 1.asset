@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d1094ed8b2124458e2c40b9560ba6f, type: 3}
+  m_Name: Part1Bedroom 1
+  m_EditorClassIdentifier: 
+  ID: S1P1_WAKEUP
+  dialogue:
+  - background: {fileID: 0}
+    personName: 
+    talk: '*Alarm bell rings*'
+  - background: {fileID: 0}
+    personName: Ischo
+    talk: Ehh, school again
+  - background: {fileID: 0}
+    personName: 
+    talk: '[The alarm reads 7:00AM]'
+  - background: {fileID: 0}
+    personName: Ischo
+    talk: I gotta get out of bed now

@@ -38,6 +38,9 @@ public class NormalPlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameHandler.Instance.isInDialogue || GameHandler.Instance.isPaused)
+            return;
+
         ProcessMovement();
         GroundCheck();
         FlipVisuals();

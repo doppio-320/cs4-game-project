@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InteractibleObject : TooltipObject
 {
     public string actionText = "Use";
 
+    public UnityEvent onInteract;
+
     public virtual void Interact()
     {
-        Debug.Log("Interacted with " + title);
+        onInteract.Invoke();
     }
 }
