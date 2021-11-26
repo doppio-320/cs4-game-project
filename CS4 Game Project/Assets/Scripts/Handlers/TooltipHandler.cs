@@ -49,8 +49,18 @@ public class TooltipHandler : MonoBehaviour
         actionContextText = interactTip.transform.Find("ActionContext").GetComponent<Text>();
 
         EndTooltip();
+
+        DialogueHandler.Instance.OnDialogueStarted += (dg, prog) =>
+        {
+            EndTooltip();
+        };
     }
-    
+
+    private void OnEnable()
+    {
+        
+    }
+
     void Update()
     {
         if (!tooltipHandler.activeSelf)
@@ -65,6 +75,8 @@ public class TooltipHandler : MonoBehaviour
         interactTip.SetActive(false);
 
         nameText.text = _obj.title;
+
+        ForceUpdateLayout();
     }
 
     public void SetTooltip(InteractibleObject _obj, KeyCode _key)
@@ -75,6 +87,16 @@ public class TooltipHandler : MonoBehaviour
         nameText.text = _obj.title;
         actionContextText.text = _obj.action;
         actionKeyText.text = _key.ToString();
+
+        ForceUpdateLayout();
+    }
+
+    void ForceUpdateLayout()
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(actionKeyText.transform.parent.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(actionContextText.transform.parent.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(nameText.transform.parent.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(tooltipHandler.transform.GetComponent<RectTransform>());
     }
 
     public void EndTooltip()

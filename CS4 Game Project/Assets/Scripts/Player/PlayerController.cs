@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public float playerWidth = 0.5f;
     public LayerMask groundLayer;
 
+    private bool isDoingCustomAnimation = false;
+
     private Rigidbody2D rBody;
     private Vector3 movementVelocity;
 
@@ -64,6 +66,9 @@ public class PlayerController : MonoBehaviour
 
     private float GetLateralMovementDirection()
     {
+        if (isDoingCustomAnimation)
+            return 0f;
+
         if (Input.GetKey(moveLeftKey))
         {
             playerAnimation.SetDirection(true, false);
@@ -76,5 +81,16 @@ public class PlayerController : MonoBehaviour
         }
 
         return 0f;
+    }
+
+    public void SetDoingMiscAnimation(float _duration)
+    {
+        isDoingCustomAnimation = true;
+        Invoke("ResetMiscAnimationState", _duration);
+    }
+
+    private void ResetMiscAnimationState()
+    {
+        isDoingCustomAnimation = false;
     }
 }

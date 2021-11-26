@@ -4,7 +4,26 @@ using UnityEngine;
 
 public class PlayerMain : MonoBehaviour
 {
-    public float playerHeight;
+    private static PlayerMain instance;
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Destroy(instance.gameObject);
+        }
+        instance = this;
+    }
+
+    public static PlayerMain Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    public float playerHeight;    
 
     void Start()
     {

@@ -36,8 +36,8 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         
-    }
-    
+    }   
+
     void Update()
     {
         
