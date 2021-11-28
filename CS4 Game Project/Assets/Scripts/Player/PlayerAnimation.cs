@@ -11,6 +11,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         public string name;
         public float duration;
+        public AudioClip audio;
     }
 
     public MiscAnimation[] registeredMiscAnimations;
@@ -20,6 +21,8 @@ public class PlayerAnimation : MonoBehaviour
     private GameObject visualsObject;
     private PlayerController playerController;
 
+    private PlayerSound playerSound;
+
     private float previousAnimatorSpeed;
     private bool isAlreadyPaused;
 
@@ -28,6 +31,8 @@ public class PlayerAnimation : MonoBehaviour
         visualsObject = transform.Find("Visuals").gameObject;
         animator = visualsObject.GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
+
+        playerSound = GetComponent<PlayerSound>();
 
         previousAnimatorSpeed = animator.speed;
     }
@@ -81,6 +86,11 @@ public class PlayerAnimation : MonoBehaviour
                 animator.SetTrigger("miscAnim_" + _anim);
                 animator.SetBool("IsDoingMiscAnimation", true);
                 Invoke("ResetFreeAnimation", registeredMiscAnimations[i].duration);
+
+                if(registeredMiscAnimations[i].audio != null)
+                {
+                    playerSound.PlayMiscSound(registeredMiscAnimations[i].audio);
+                }
                 return;
             }
         }
@@ -92,7 +102,7 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("IsDoingMiscAnimation", false);
     }
 
-    public void SetSpeed(float _speed)
+    public void SetPlayerMovementSpeed(float _speed)
     {
         playerSpeed = Mathf.Abs(_speed);
     }
