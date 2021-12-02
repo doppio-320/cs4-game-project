@@ -24,11 +24,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 movementVelocity;
 
     private PlayerAnimation playerAnimation;
+    private PlayerSound playerSound;
 
     void Start()
     {
         rBody = GetComponent<Rigidbody2D>();
+
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerSound = GetComponent<PlayerSound>();
     }
 
     void Update()
@@ -56,12 +59,16 @@ public class PlayerController : MonoBehaviour
     private void CalculateMovement()
     {
         if (!isGrounded)
+        {
+            playerSound.SetPlayerMovementSpeed(0f);
             return;
+        }            
 
         Vector3 targetVelocity = new Vector3(GetLateralMovementDirection() * movementSpeed, rBody.velocity.y);
         rBody.velocity = Vector3.SmoothDamp(rBody.velocity, targetVelocity, ref movementVelocity, movementSmoothing);
 
-        playerAnimation.SetSpeed(rBody.velocity.x);
+        playerAnimation.SetPlayerMovementSpeed(rBody.velocity.x);
+        playerSound.SetPlayerMovementSpeed(rBody.velocity.x);
     }
 
     private float GetLateralMovementDirection()
