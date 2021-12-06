@@ -1646,6 +1646,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 332367716933176597, guid: 3cf6381f17e17f14e8db5d735f907343, type: 3}
+      propertyPath: registeredMiscAnimations.Array.data[0].name
+      value: breakAlarmClock
+      objectReference: {fileID: 0}
+    - target: {fileID: 332367716933176597, guid: 3cf6381f17e17f14e8db5d735f907343, type: 3}
       propertyPath: registeredMiscAnimations.Array.data[0].audio
       value: 
       objectReference: {fileID: 8300000, guid: f990c785225fa894c90e1e7bf30abbfa, type: 3}

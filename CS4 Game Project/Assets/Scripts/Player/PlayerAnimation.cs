@@ -87,7 +87,7 @@ public class PlayerAnimation : MonoBehaviour
                 animator.SetBool("IsDoingMiscAnimation", true);
                 Invoke("ResetFreeAnimation", registeredMiscAnimations[i].duration);
 
-                if(registeredMiscAnimations[i].audio != null)
+                if (registeredMiscAnimations[i].audio != null)
                 {
                     playerSound.PlayMiscSound(registeredMiscAnimations[i].audio);
                 }

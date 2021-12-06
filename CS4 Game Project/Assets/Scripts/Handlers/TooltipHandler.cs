@@ -53,7 +53,7 @@ public class TooltipHandler : MonoBehaviour
         DialogueHandler.Instance.OnDialogueStarted += (dg, prog) =>
         {
             EndTooltip();
-        };
+        };        
     }
 
     private void OnEnable()
