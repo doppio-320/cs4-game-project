@@ -15,6 +15,9 @@ MonoBehaviour:
   dialogueID: coffeeMakerInteract_0
   hasImages: 0
   dialogueSteps:
-  - personName: You
-    dialogueText: Energy...
+  - personName: Iskolar
+    dialogueText: Caffeine...
+    dialogueImage: {fileID: 0}
+  - personName: Iskolar
+    dialogueText: A scholar's vigor is as good as their coffee.
     dialogueImage: {fileID: 0}

@@ -15,12 +15,15 @@ MonoBehaviour:
   dialogueID: AlarmClockCheck0
   hasImages: 1
   dialogueSteps:
-  - personName: You
+  - personName: Iskolar
     dialogueText: I woke up late again.
     dialogueImage: {fileID: 0}
-  - personName: You
+  - personName: Iskolar
     dialogueText: Ugh, better get ready quick before I'm really late.
     dialogueImage: {fileID: 0}
-  - personName: You
+  - personName: Iskolar
+    dialogueText: Your kind has put me through so much misery.
+    dialogueImage: {fileID: 0}
+  - personName: Iskolar
     dialogueText: Prepare to die, putrid alarm clock!
     dialogueImage: {fileID: 0}

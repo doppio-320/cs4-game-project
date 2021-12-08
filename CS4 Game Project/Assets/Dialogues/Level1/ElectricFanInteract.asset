@@ -18,6 +18,6 @@ MonoBehaviour:
   - personName: 
     dialogueText: (you take a deep breath)
     dialogueImage: {fileID: 0}
-  - personName: You
+  - personName: Iskolar
     dialogueText: '*sigh* The philippines will always be hot'
     dialogueImage: {fileID: 0}
