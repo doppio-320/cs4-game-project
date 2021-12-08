@@ -11,12 +11,12 @@ public class DialogueOnInteract : MonoBehaviour
     {
         interactibleObject = GetComponent<InteractibleObject>();
 
-        interactibleObject.OnInteracted += StartDialogue;
+        interactibleObject.OnInteracted += StartDialogue;        
     }
 
     void StartDialogue(InteractibleObject _io)
     {
-        DialogueHandler.Instance.StartDialogue(preset);
+        DialogueHandler.Instance.StartDialogue(preset);        
     }
 
     private void OnDisable()

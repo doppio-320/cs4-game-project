@@ -56,8 +56,19 @@ public class DialogueHandler : MonoBehaviour
         }
     }
 
-    public void StartDialogue(DialoguePreset _diag)
+    private void Update()
     {
+        if (!dialogueUIParent.activeSelf)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ProgressDialogue();
+        }
+    }
+
+    public void StartDialogue(DialoguePreset _diag)
+    {        
         GameHandler.Instance.pauseState = PauseState.Dialogue;
 
         activePreset = _diag;
@@ -71,17 +82,6 @@ public class DialogueHandler : MonoBehaviour
         if (OnDialogueStarted != null)
         {
             OnDialogueStarted(activePreset, dialogueProgress);
-        }
-    }
-
-    private void Update()
-    {
-        if (!dialogueUIParent.activeSelf)
-            return;
-
-        if(Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
-        {
-            ProgressDialogue();
         }
     }
 

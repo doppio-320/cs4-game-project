@@ -9,12 +9,15 @@ public class DestroyOnDialogueEvent : MonoBehaviour
     public int destroyOnProgress;
 
     void Start()
-    {
+    {        
         if (eventType == DialogueEventType.Ended)
         {
             DialogueHandler.Instance.OnDialogueEnded += (_dialogue, _progress) =>
             {
-                Destroy(gameObject);
+                if(_dialogue.dialogueID == dialogueID)
+                {
+                    Destroy(gameObject);
+                }                
             };
         }
         if (eventType == DialogueEventType.Progress)
@@ -23,7 +26,10 @@ public class DestroyOnDialogueEvent : MonoBehaviour
             {
                 if(_progress == destroyOnProgress)
                 {
-                    Destroy(gameObject);
+                    if (_dialogue.dialogueID == dialogueID)
+                    {
+                        Destroy(gameObject);
+                    }
                 }                
             };
         }
@@ -31,7 +37,10 @@ public class DestroyOnDialogueEvent : MonoBehaviour
         {
             DialogueHandler.Instance.OnDialogueStarted += (_dialogue, _progress) =>
             {
-                Destroy(gameObject);
+                if (_dialogue.dialogueID == dialogueID)
+                {
+                    Destroy(gameObject);
+                }
             };
         }
     }

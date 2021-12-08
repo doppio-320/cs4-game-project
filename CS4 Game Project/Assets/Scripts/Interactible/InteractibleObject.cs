@@ -8,7 +8,7 @@ public class InteractibleObject : TooltipObject
 
     public virtual void Interact()
     {
-        //Debug.Log("Interacted with " + title);
+        Debug.Log("Interacted with " + title);
 
         if(OnInteracted != null)
         {
