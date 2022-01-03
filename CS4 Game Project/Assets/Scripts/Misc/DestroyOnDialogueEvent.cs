@@ -8,6 +8,11 @@ public class DestroyOnDialogueEvent : MonoBehaviour
     public string dialogueID;
     public int destroyOnProgress;
 
+    //Lousy feature embedded here instead: Optionally disable the object and renable [010222]
+    [Header("Temporary Disable")]
+    public bool tempDisable;
+    public float timeDisable;
+
     void Start()
     {        
         if (eventType == DialogueEventType.Ended)
@@ -15,8 +20,8 @@ public class DestroyOnDialogueEvent : MonoBehaviour
             DialogueHandler.Instance.OnDialogueEnded += (_dialogue, _progress) =>
             {
                 if(_dialogue.dialogueID == dialogueID)
-                {
-                    Destroy(gameObject);
+                {                    
+                    Destroy();
                 }                
             };
         }
@@ -28,7 +33,7 @@ public class DestroyOnDialogueEvent : MonoBehaviour
                 {
                     if (_dialogue.dialogueID == dialogueID)
                     {
-                        Destroy(gameObject);
+                        Destroy();
                     }
                 }                
             };
@@ -39,11 +44,43 @@ public class DestroyOnDialogueEvent : MonoBehaviour
             {
                 if (_dialogue.dialogueID == dialogueID)
                 {
-                    Destroy(gameObject);
+                    Destroy();
                 }
             };
         }
     }
+
+    private void Destroy()
+    {
+        if(tempDisable && timeDisable > 0f)
+        {
+            Invoke("ReEnable", timeDisable);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
+        if(OnDestroyTriggered != null)
+        {
+            OnDestroyTriggered();
+        }
+    }
+
+    private void ReEnable()
+    {
+        gameObject.SetActive(true);
+        
+        if(OnReEnabled != null)
+        {
+            OnReEnabled();
+        }
+    }
+
+    public delegate void DestroyOnDialogueEventHandler();
+    public DestroyOnDialogueEventHandler OnDestroyTriggered;
+    public DestroyOnDialogueEventHandler OnReEnabled;
 
     public enum DialogueEventType
     {
