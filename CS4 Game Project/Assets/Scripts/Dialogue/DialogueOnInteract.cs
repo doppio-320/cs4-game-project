@@ -11,7 +11,10 @@ public class DialogueOnInteract : MonoBehaviour
     {
         interactibleObject = GetComponent<InteractibleObject>();
 
-        interactibleObject.OnInteracted += StartDialogue;        
+        if(interactibleObject != null)
+        {
+            interactibleObject.OnInteracted += StartDialogue;
+        }        
     }
 
     void StartDialogue(InteractibleObject _io)
@@ -21,6 +24,9 @@ public class DialogueOnInteract : MonoBehaviour
 
     private void OnDisable()
     {
-        interactibleObject.OnInteracted -= StartDialogue;
+        if (interactibleObject != null)
+        {
+            interactibleObject.OnInteracted -= StartDialogue;
+        }        
     }
 }

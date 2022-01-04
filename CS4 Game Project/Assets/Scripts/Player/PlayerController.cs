@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
 
     private bool isDoingCustomAnimation = false;
+    private bool inhibitMovement = false;
 
     private Rigidbody2D rBody;
     private Vector3 movementVelocity;
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     private float GetLateralMovementDirection()
     {
-        if (isDoingCustomAnimation)
+        if (isDoingCustomAnimation || inhibitMovement || !PlayerMain.Instance.isActive)
             return 0f;
 
         if (Input.GetKey(moveLeftKey))
@@ -88,6 +89,12 @@ public class PlayerController : MonoBehaviour
         }
 
         return 0f;
+    }
+
+    //Use these for cutscenes
+    public void SetInhibitMoving(bool _value)
+    {
+        inhibitMovement = _value;
     }
 
     public void SetDoingMiscAnimation(float _duration)

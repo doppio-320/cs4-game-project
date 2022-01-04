@@ -8,6 +8,11 @@ public class TooltipObject : MonoBehaviour
 
     private PlayerInteraction interactor;
 
+    private void OnEnable()
+    {
+        //SpeechBubbleHandler.Instance.AddSpeechBubble(transform, gameObject.name);
+    }
+
     public void SetInteractor(PlayerInteraction _interactor)
     {
         interactor = _interactor;

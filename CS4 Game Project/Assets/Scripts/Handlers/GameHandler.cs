@@ -32,6 +32,8 @@ public class GameHandler : MonoBehaviour
     #endregion
 
     public PauseState pauseState;
+    public bool inhibitAmbientSounds;
+    public Transform npcContainer;
 
     void Start()
     {
@@ -41,6 +43,11 @@ public class GameHandler : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetInhibitAmbientSounds(bool _value)
+    {
+        inhibitAmbientSounds = _value;
     }
 }
 

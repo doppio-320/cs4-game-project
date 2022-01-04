@@ -23,14 +23,15 @@ public class PlayerMain : MonoBehaviour
         }
     }
 
-    public float playerHeight;    
+    public float playerHeight;
+    public bool isActive = true;
+    public Transform speechBubbleLocation;
 
     void Start()
     {
         
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         

@@ -39,6 +39,16 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
+        if(!PlayerMain.Instance.isActive)
+        {
+            visualsObject.SetActive(false);
+            return;
+        }
+        else
+        {
+            visualsObject.SetActive(true);
+        }
+
         if(GameHandler.Instance.pauseState != PauseState.None)
         {
             if (!isAlreadyPaused)

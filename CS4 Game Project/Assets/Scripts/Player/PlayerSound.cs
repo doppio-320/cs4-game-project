@@ -14,7 +14,8 @@ public class PlayerSound : MonoBehaviour
 
     [Header("Misc Sounds")]
     public AudioSource miscSource;
-    private AudioClip activeFootstepSound;
+    private AudioClip activeMiscSound;
+    
 
     void Start()
     {
@@ -28,7 +29,7 @@ public class PlayerSound : MonoBehaviour
     {
         if(footstepsSource != null)
         {
-            if (Mathf.Abs(walkingSpeed) > 0.075f)
+            if (Mathf.Abs(walkingSpeed) > 0.075f && GameHandler.Instance.pauseState == PauseState.None && PlayerMain.Instance.isActive)
             {
                 footstepsSource.volume = Mathf.Lerp(footstepsSource.volume, 1f, fadeSpeed * Time.deltaTime);
             }
@@ -41,10 +42,10 @@ public class PlayerSound : MonoBehaviour
 
     public void PlayMiscSound(AudioClip _clip)
     {
-        activeFootstepSound = _clip;
-        miscSource.clip = activeFootstepSound;
+        activeMiscSound = _clip;
+        miscSource.clip = activeMiscSound;
         miscSource.Play();
-    }
+    }    
 
     public void SetPlayerMovementSpeed(float _speed)
     {

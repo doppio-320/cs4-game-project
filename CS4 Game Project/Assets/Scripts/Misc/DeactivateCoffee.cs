@@ -30,5 +30,6 @@ public class DeactivateCoffee : MonoBehaviour
         Destroy(GetComponent<InteractibleObject>());
         var tto = gameObject.AddComponent<TooltipObject>();
         tto.title = "Coffee Maker";
+        Level1Cutscene.Instance.SpawnMom();
     }
 }
