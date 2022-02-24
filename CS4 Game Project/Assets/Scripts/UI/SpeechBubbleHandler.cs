@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SpeechBubbleHandler : MonoBehaviour
@@ -38,14 +40,32 @@ public class SpeechBubbleHandler : MonoBehaviour
     
     void OnEnable()
     {
+        SceneManager.sceneLoaded += ClearAllBubbles;
+
         speechBubbleParent = transform.Find("SpeechBubbles");
         speechBubbles = new Dictionary<Transform, GameObject>();
     }
-    
+
+    private void ClearAllBubbles(Scene arg0, LoadSceneMode arg1)
+    {
+        speechBubbles = new Dictionary<Transform, GameObject>();
+
+        foreach (Transform child in speechBubbleParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     void Update()
     {
         foreach (var sb in speechBubbles)
         {
+            if(sb.Key == null)
+            {
+                //speechBubbles.Remove(sb.Key);
+                continue;
+            }            
+
             sb.Value.transform.position = Camera.main.WorldToScreenPoint(sb.Key.position);
         }
     }
@@ -74,5 +94,10 @@ public class SpeechBubbleHandler : MonoBehaviour
             Destroy(speechBubbles[_tr]);
             speechBubbles.Remove(_tr);            
         }
+    }
+
+    private void OnLevel(int level)
+    {
+        speechBubbles = new Dictionary<Transform, GameObject>();
     }
 }

@@ -68,8 +68,8 @@ public class DialogueHandler : MonoBehaviour
     }
 
     public void StartDialogue(DialoguePreset _diag)
-    {        
-        GameHandler.Instance.pauseState = PauseState.Dialogue;
+    {
+        GameHandler.Instance.SetDialogueState(true);
 
         activePreset = _diag;
         dialogueProgress = -1;
@@ -107,7 +107,7 @@ public class DialogueHandler : MonoBehaviour
 
     public void EndDialogue()
     {
-        GameHandler.Instance.pauseState = PauseState.None;
+        GameHandler.Instance.SetDialogueState(false);
 
         if (OnDialogueEnded != null)
         {

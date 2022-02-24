@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Level1Bossfight.unity
+    guid: 54ba24445654bec4fae9a2f3c7aaef2e
   m_configObjects: {}

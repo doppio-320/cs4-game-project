@@ -49,19 +49,22 @@ public class PlayerAnimation : MonoBehaviour
             visualsObject.SetActive(true);
         }
 
-        if(GameHandler.Instance.pauseState != PauseState.None)
+        if(GameHandler.Instance.pauseState != PauseState.None && GameHandler.Instance.pauseState != PauseState.Cutscene)
         {
             if (!isAlreadyPaused)
             {
                 previousAnimatorSpeed = animator.speed;
                 animator.speed = 0;
-                isAlreadyPaused = transform;
+                isAlreadyPaused = true;
             }            
         }
         else
         {
-            isAlreadyPaused = false;
-            animator.speed = previousAnimatorSpeed;
+            if (isAlreadyPaused)
+            {
+                isAlreadyPaused = false;
+                animator.speed = previousAnimatorSpeed;
+            }            
         }
 
         if(playerSpeed >= minimumMoveSpeed)

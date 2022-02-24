@@ -42,7 +42,52 @@ public class GameHandler : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(pauseState == PauseState.None)
+            {
+                pauseState = PauseState.PauseMenu;
+                PauseMenuHandler.Instance.SetMenuActive(true);
+            }
+            else if(pauseState == PauseState.PauseMenu)
+            {
+                pauseState = PauseState.None;
+                PauseMenuHandler.Instance.SetMenuActive(false);
+            }
+        }
+    }
+
+    public void UnpauseMenu()
+    {
+        if (pauseState == PauseState.PauseMenu)
+        {
+            pauseState = PauseState.None;
+            PauseMenuHandler.Instance.SetMenuActive(false);
+        }
+    }
+
+    public void SetCutsceneState(bool _state)
+    {
+        if (_state)
+        {
+            pauseState = PauseState.Cutscene;
+        }
+        else
+        {
+            pauseState = PauseState.None;
+        }
+    }
+
+    public void SetDialogueState(bool _state)
+    {
+        if (_state)
+        {
+            pauseState = PauseState.Dialogue;
+        }
+        else
+        {
+            pauseState = PauseState.None;
+        }
     }
 
     public void SetInhibitAmbientSounds(bool _value)
@@ -55,5 +100,6 @@ public enum PauseState
 {
     None,
     Dialogue,
+    Cutscene,
     PauseMenu
 }

@@ -18,6 +18,9 @@ public class Level1WakingUp : MonoBehaviour
     public float minimumMoveTimeForTutorial = 0.35f;
     public InteractibleDoor unlockDoor;
 
+    public GameObject animatedBed;
+    public GameObject staticBed;
+
     private PlayerController playerController;
 
     private bool canWakeUp = false;
@@ -30,8 +33,9 @@ public class Level1WakingUp : MonoBehaviour
             unlockDoor.doorIsLocked = false;
             destroyAlarmGuide.SetActive(false);
             moveGuide.SetActive(false);
-            SpeechBubbleHandler.Instance.DeleteSpeechBubble(alarmClockSpeechBubble);            
-            Destroy(gameObject);
+            SpeechBubbleHandler.Instance.DeleteSpeechBubble(alarmClockSpeechBubble);
+            GameHandler.Instance.SetCutsceneState(false);
+            Destroy(gameObject);            
         }
     }
 
@@ -43,6 +47,7 @@ public class Level1WakingUp : MonoBehaviour
         playerController = PlayerMain.Instance.GetComponent<PlayerController>();
 
         StartCutscene();
+        GameHandler.Instance.SetCutsceneState(true);
         GameHandler.Instance.inhibitAmbientSounds = true;
     }
 
@@ -80,6 +85,9 @@ public class Level1WakingUp : MonoBehaviour
                 canWakeUp = false;
                 wokenUp = true;
                 Destroy(GetComponent<AudioSource>());
+
+                animatedBed.SetActive(false);
+                staticBed.SetActive(true);
             }            
         }
 

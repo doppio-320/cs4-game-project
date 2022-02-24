@@ -21,8 +21,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (GameHandler.Instance.pauseState != PauseState.None || !PlayerMain.Instance.isActive)
+        if (GameHandler.Instance.pauseState == PauseState.PauseMenu || !PlayerMain.Instance.isActive)
+        {
+            RemoveInteractible();
             return;
+        }
 
         cursorInteractor.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 

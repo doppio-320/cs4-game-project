@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TooltipHandler : MonoBehaviour
@@ -53,7 +55,14 @@ public class TooltipHandler : MonoBehaviour
         DialogueHandler.Instance.OnDialogueStarted += (dg, prog) =>
         {
             EndTooltip();
-        };        
+        };
+
+        SceneManager.sceneLoaded += ClearTooltip;
+    }
+
+    private void ClearTooltip(Scene arg0, LoadSceneMode arg1)
+    {
+        EndTooltip();
     }
 
     private void OnEnable()

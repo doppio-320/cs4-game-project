@@ -34,7 +34,7 @@ public class NPCMovement : MonoBehaviour
 
     private void Update()
     {
-        if (GameHandler.Instance.pauseState != PauseState.None)
+        if (GameHandler.Instance.pauseState == PauseState.PauseMenu)
             return;
 
         GroundCheck();
@@ -54,10 +54,32 @@ public class NPCMovement : MonoBehaviour
         }
     }
 
+    /*private void OnDrawGizmosSelected()
+    {
+        if (target)
+        {
+            var midpoint = (new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z) + new Vector3(target.position.x, target.position.y + 2f, transform.position.z)) / 2f;
+            UnityEditor.Handles.Label(midpoint, $"DIST: {Mathf.Abs(transform.position.x - target.transform.position.x)} / STOP: {stoppingDistance}");
+            Gizmos.DrawLine(new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), new Vector3(target.position.x, target.position.y + 1f, transform.position.z));
+        }
+    }*/
+
     private void CalculateMovement()
     {
         Vector3 targetVelocity = new Vector3(GetLateralMovementDirection() * movementSpeed, rBody.velocity.y);
         rBody.velocity = Vector3.SmoothDamp(rBody.velocity, targetVelocity, ref movementVelocity, movementSmoothing);
+
+        npcAnimation.SetNPCMovementSpeed(rBody.velocity.x);
+    }
+
+    public void SetTarget(Transform _transform)
+    {
+        target = _transform;
+    }
+
+    public bool TargetIsWithinStoppingDistance()
+    {
+        return Mathf.Abs(transform.position.x - target.position.x) < stoppingDistance;
     }
 
     private float GetLateralMovementDirection()
@@ -65,7 +87,7 @@ public class NPCMovement : MonoBehaviour
         if (!target)
             return 0f;
 
-        if (isDoingCustomAnimation || Mathf.Abs(transform.position.x - target.position.x) < stoppingDistance)
+        if (isDoingCustomAnimation || TargetIsWithinStoppingDistance())
             return 0f;        
 
         if (target.position.x < transform.position.x)

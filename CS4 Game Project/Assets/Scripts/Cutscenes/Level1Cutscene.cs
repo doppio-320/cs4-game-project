@@ -37,16 +37,30 @@ public class Level1Cutscene : MonoBehaviour
 
     [Header("Audio Assets")]
     public AudioClip vineBoomShock;
+    public AudioClip speechBubbleSound;
+    public AudioClip intenseMusic;
 
     [Header("Trigger Area")]
     public Vector2 lowerLeftCorner;
     public Vector2 upperRightCorner;
 
+    [Header("Speeches")]
+    public string npcMomSpeech1 = "Do you know how late you are to class?";
+    public string npcMomSpeech2 = "Give me your hand!";
+
+    private bool waitForDistanceToClose = false;
+    private bool isDoingTransition = false;
+
     private PlayerMain playerMain;
     private PlayerController playerController;
-    private CameraFollowPlayer playerCam;
+    private PlayerSound playerSound;
+    private CameraFollowPlayer playerCam;    
 
     private AudioSource oneShot;
+
+    public GameObject momNPC;
+    private NPCMovement momNpcMovement;
+    private Transform momSpeech;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +68,7 @@ public class Level1Cutscene : MonoBehaviour
         playerMain = PlayerMain.Instance;
         playerController = playerMain.GetComponent<PlayerController>();
         playerCam = playerMain.GetComponent<CameraFollowPlayer>();
+        playerSound = playerMain.GetComponent<PlayerSound>();
 
         oneShot = GetComponent<AudioSource>();
     }
@@ -88,10 +103,20 @@ public class Level1Cutscene : MonoBehaviour
                 }
             }
         }
+
+        if (waitForDistanceToClose)
+        {
+            if (momNpcMovement.TargetIsWithinStoppingDistance() && !isDoingTransition)
+            {
+                LoadingScreen.Instance.StartLoadSceneAsync("Level1Bossfight");
+            }
+        }
     }
 
     void Step1Cutscene()
     {
+        GameHandler.Instance.SetCutsceneState(true);
+        playerSound.PlayMiscSound(intenseMusic, 0.1f);
         playerController.SetInhibitMoving(true);
         var shockObject = Instantiate(shockFX, playerMain.transform.Find("Visuals"));
         Destroy(shockObject, 0.45f);
@@ -103,6 +128,7 @@ public class Level1Cutscene : MonoBehaviour
     {
         playerCam.SetTarget(cameraTarget);
         Invoke("PlayShockSfx", 0.65f);
+        Invoke("FlipMom", 2.5f);
     }
 
     void PlayShockSfx()
@@ -121,6 +147,22 @@ public class Level1Cutscene : MonoBehaviour
     public void SpawnMom()
     {
         hasDrankCoffee = true;
-        Instantiate(npcMom, momSpawnLocation.position, Quaternion.identity, GameHandler.Instance.npcContainer);
+        momNPC = Instantiate(npcMom, momSpawnLocation.position, Quaternion.identity, GameHandler.Instance.npcContainer);
+        momSpeech = momNPC.GetComponent<NPCMain>().speechBubbleLocation;
+        momNpcMovement = momNPC.GetComponent<NPCMovement>();
+    }
+
+    public void FlipMom()
+    {
+        momNPC.GetComponent<NPCAnimation>().SetNPCDirection(true, false);
+        SpeechBubbleHandler.Instance.AddSpeechBubble(momSpeech, npcMomSpeech1);
+        oneShot.PlayOneShot(speechBubbleSound);
+        Invoke("StartMovingMomToPlayer", 3f);
+    }
+
+    public void StartMovingMomToPlayer()
+    {
+        momNPC.GetComponent<NPCMovement>().SetTarget(PlayerMain.Instance.transform);
+        waitForDistanceToClose = true;
     }
 }
