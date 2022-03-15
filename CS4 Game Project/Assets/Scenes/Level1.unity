@@ -4457,30 +4457,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 757349073, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 757349073, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 757349073, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 757349073, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 757349073, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 757349073, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1119863357158415047, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
       propertyPath: m_Name
       value: GameUI
@@ -5175,23 +5151,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2012807251}
   m_CullTransparentMesh: 1
---- !u!1 &2030100510 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1119863357158415047, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
-  m_PrefabInstance: {fileID: 1842942954}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2030100525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030100510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16c600c3a5f43ba47bff1c4733ebc151, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2036030935
 GameObject:
   m_ObjectHideFlags: 0

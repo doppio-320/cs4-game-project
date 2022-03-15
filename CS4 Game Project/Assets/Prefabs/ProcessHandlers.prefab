@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseState: 0
+  inhibitAmbientSounds: 0
+  npcContainer: {fileID: 0}
