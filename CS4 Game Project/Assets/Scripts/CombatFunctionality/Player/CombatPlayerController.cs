@@ -11,6 +11,7 @@ public class CombatPlayerController : MonoBehaviour
     public KeyCode dashKey = KeyCode.E;    
     public bool isDashing = false;
     public bool isDashingRight = true;
+    public bool attackingInhibit = false;
 
     [Header("Movement Data")]        
     public float movementSpeed = 1.5f;
@@ -32,6 +33,7 @@ public class CombatPlayerController : MonoBehaviour
 
     [Header("Ground Check")]
     public bool isGrounded = false;
+    public bool lungeInhibit = false;
     public float groundCheckDistance = 0.05f;
     public float playerWidth = 0.5f;
     public LayerMask groundLayer;
@@ -89,8 +91,20 @@ public class CombatPlayerController : MonoBehaviour
         }
     }
 
+    public void SetAttackingInhibit(bool value)
+    {
+        attackingInhibit = value;
+        if(attackingInhibit)
+        {
+            rBody.velocity = new Vector2(rBody.velocity.x / 3, 0f);
+        }
+    }
+
     private float GetLateralMovementDirection()
     {
+        if (attackingInhibit)
+            return 0f;
+
         if (Input.GetKey(moveLeftKey))
         {
             combatPlayerAnim.SetPlayerDirection(true, false);
@@ -105,6 +119,19 @@ public class CombatPlayerController : MonoBehaviour
         }
 
         return 0f;
+    }
+
+    public void AttackLunge(float time, float force)
+    {
+        lungeInhibit = true;
+        Invoke("EndLunge", time);
+        rBody.AddForce(new Vector2(force * (isDashingRight ? 1 : -1), 0.05f), ForceMode2D.Impulse);        
+    }
+
+    private void EndLunge()
+    {
+        lungeInhibit = false;
+        rBody.velocity = new Vector2(0f, rBody.velocity.y);
     }
 
     private void Jump()
@@ -177,8 +204,11 @@ public class CombatPlayerController : MonoBehaviour
         }
         else
         {
-            Vector3 targetVelocity = new Vector3(GetLateralMovementDirection() * movementSpeed, rBody.velocity.y);
-            rBody.velocity = Vector3.SmoothDamp(rBody.velocity, targetVelocity, ref movementVelocity, movementSmoothing);
+            if(!lungeInhibit)
+            {
+                Vector3 targetVelocity = new Vector3(GetLateralMovementDirection() * movementSpeed, rBody.velocity.y);
+                rBody.velocity = Vector3.SmoothDamp(rBody.velocity, targetVelocity, ref movementVelocity, movementSmoothing);
+            }
         }
         combatPlayerAnim.SetPlayerSpeed(rBody.velocity.x);
 
