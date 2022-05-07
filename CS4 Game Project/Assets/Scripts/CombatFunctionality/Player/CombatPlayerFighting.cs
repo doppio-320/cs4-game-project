@@ -12,6 +12,7 @@ public class CombatPlayerFighting : MonoBehaviour
         public float missHitscanTime;
         public float minimumNextAttack;
         public bool doesLunge;
+        public int redirectIndex = -1;
     }
 
     [Header("Primary Attack")]
@@ -63,12 +64,17 @@ public class CombatPlayerFighting : MonoBehaviour
 
                 case FightingState.Attacking:
                     if(attackRemaining < (attackSequence[attackIndex].attackTime - attackSequence[attackIndex].minimumNextAttack))
-                    {
-                        if(attackIndex < attackSequence.Length)
+                    {                        
+                        if (attackSequence[attackIndex].redirectIndex > -1)
+                        {
+                            attackIndex = attackSequence[attackIndex].redirectIndex;
+                            UpdateAttack();
+                        }
+                        else if (attackIndex < attackSequence.Length - 1)
                         {
                             attackIndex++;
                             UpdateAttack();
-                        }                        
+                        }
                     }
                     break;
 
@@ -95,7 +101,7 @@ public class CombatPlayerFighting : MonoBehaviour
             {
                 if(hitAvailable)
                 {
-                    spriteRenderer.color = Color.green;
+                    //spriteRenderer.color = Color.green;
                     //Check hitscan
                 }
 
@@ -107,7 +113,7 @@ public class CombatPlayerFighting : MonoBehaviour
             }
             else
             {                
-                spriteRenderer.color = Color.white;
+                //spriteRenderer.color = Color.white;
             }
 
             if(attackRemaining < 0f)
