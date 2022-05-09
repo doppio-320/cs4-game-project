@@ -12,10 +12,13 @@ public class LoadingScreen : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(instance.gameObject);
+            Destroy(gameObject);
         }
-        instance = this;
-        DontDestroyOnLoad(this);
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
     }
 
     public static LoadingScreen Instance
@@ -39,7 +42,7 @@ public class LoadingScreen : MonoBehaviour
         loadFill = loadScreenParent.transform.Find("LoadingBorder").Find("LoadingBg").Find("LoadFill").GetComponent<RectTransform>();
         fullLoadWidth = loadFill.rect.width;
 
-        //Debug.Log(fullLoadWidth);
+        //Debug.Log(fullLoadWidth);        
     }
 
     private void Update()
@@ -48,7 +51,7 @@ public class LoadingScreen : MonoBehaviour
             return;
 
         loadFill.sizeDelta = new Vector2(currentLoadSceneAo.progress * fullLoadWidth, loadFill.sizeDelta.y);
-    }
+    }    
 
     public void StartLoadSceneAsync(string _sceneName)
     {

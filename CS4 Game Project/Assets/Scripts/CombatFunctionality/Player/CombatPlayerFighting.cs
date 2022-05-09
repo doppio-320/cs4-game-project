@@ -7,7 +7,9 @@ public class CombatPlayerFighting : MonoBehaviour
     [System.Serializable]
     public class PlayerAttack
     {
-        public float attackTime;
+        public float rawDamage;
+        public float attackRange;
+        public float attackTime;        
         public float startHitscanTime;
         public float missHitscanTime;
         public float minimumNextAttack;
@@ -19,6 +21,7 @@ public class CombatPlayerFighting : MonoBehaviour
     public float preAttackTime;    
     public PlayerAttack[] attackSequence;
     public float postAttackTime;
+    public LayerMask bossLayer;
 
     [Header("Complimentary Lunge")]
     public float tempDisableMovementTime = 0.1f;
@@ -34,15 +37,15 @@ public class CombatPlayerFighting : MonoBehaviour
     public float postAttackRemaining;
 
     [Header("Visuals")]
-    private GameObject visualsObject;
-    private SpriteRenderer spriteRenderer;
+    private GameObject visualsObject;    
     private Animator animator;
     private CombatPlayerController playerController;
 
+    private bool inhibitAttacks = false;
+
     void Start()
     {
-        visualsObject = transform.Find("Visuals").gameObject;
-        spriteRenderer = visualsObject.GetComponent<SpriteRenderer>();
+        visualsObject = transform.Find("Visuals").gameObject;        
         animator = visualsObject.GetComponent<Animator>();
         playerController = GetComponent<CombatPlayerController>();
     }
@@ -50,7 +53,10 @@ public class CombatPlayerFighting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (GameHandler.Instance.pauseState != PauseState.None && GameHandler.Instance.pauseState != PauseState.Cutscene)
+            return;
+
+        if (Input.GetMouseButtonDown(0) && !inhibitAttacks)
         {            
             switch(fightingState)
             {
@@ -100,9 +106,17 @@ public class CombatPlayerFighting : MonoBehaviour
                 attackRemaining > (attackSequence[attackIndex].attackTime - attackSequence[attackIndex].missHitscanTime))
             {
                 if(hitAvailable)
-                {
-                    //spriteRenderer.color = Color.green;
-                    //Check hitscan
+                {                    
+                    var ray = Physics2D.Raycast(GetComponent<BoxCollider2D>().bounds.center, animator.transform.localScale.x > 0 ? Vector2.right : Vector2.left, attackSequence[attackIndex].attackRange, bossLayer);
+                    if (ray)
+                    {
+                        var bBC = ray.transform.GetComponent<BossBasicCombat>();
+                        if (bBC)
+                        {
+                            bBC.Damage(attackSequence[attackIndex].rawDamage);
+                            hitAvailable = false;
+                        }
+                    }
                 }
 
                 if(!didLunge && attackSequence[attackIndex].doesLunge)
@@ -135,6 +149,11 @@ public class CombatPlayerFighting : MonoBehaviour
                 fightingState = FightingState.None;                
             }
         }
+    }
+
+    public void SetInhibitAttacks(bool _value)
+    {
+        inhibitAttacks = _value;
     }
 
     private void UpdateAttack()

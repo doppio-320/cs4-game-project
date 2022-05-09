@@ -188,9 +188,10 @@ GameObject:
   - component: {fileID: 6380624538909348850}
   - component: {fileID: 6380624538909348848}
   - component: {fileID: 6380624538909348851}
-  - component: {fileID: 6380624538909348849}
-  - component: {fileID: 6380624538909348862}
   - component: {fileID: 1033097388}
+  - component: {fileID: 6380624538909348862}
+  - component: {fileID: 6380624538909348849}
+  - component: {fileID: 6193422092266447602}
   m_Layer: 10
   m_Name: Boss_Mom
   m_TagString: Untagged
@@ -263,6 +264,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1033097388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6380624538909348853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6412360b80b0b741b06ca53aee8f04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcName: 
+  speechBubbleLocation: {fileID: 4558471857099286603}
+--- !u!114 &6380624538909348862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6380624538909348853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b24258f2c24e14d9071e2f24c6e583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumMoveSpeed: 0.1
 --- !u!114 &6380624538909348849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  stoppingDistance: 0.65
+  stoppingDistance: 1.85
   movementSpeed: 1.5
   movementSmoothing: 0.135
   isGrounded: 0
@@ -285,7 +313,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
---- !u!114 &6380624538909348862
+--- !u!114 &6193422092266447602
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,23 +322,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 6380624538909348853}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5b24258f2c24e14d9071e2f24c6e583, type: 3}
+  m_Script: {fileID: 11500000, guid: e86d899e75b2d8a4ab8abd5459cffd03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimuzMoveSpeed: 0.1
---- !u!114 &1033097388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6380624538909348853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6412360b80b0b741b06ca53aee8f04a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speechBubbleLocation: {fileID: 4558471857099286603}
+  targetPlayer: {fileID: 0}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  attackIndex: 0
+  attackSequence:
+  - attackDuration: 0.8333333
+    attackDelay: 0.6
+    attackRange: 1.75
+    attackKnockback: {x: 0, y: 0}
+    attackDamage: 90
+  - attackDuration: 0.9166667
+    attackDelay: 0.53333336
+    attackRange: 2
+    attackKnockback: {x: 7.5, y: 5}
+    attackDamage: 150
+  lastAttackCooldown: 0.95
+  defaultHeath: 2000
 --- !u!1 &7845720422750508962
 GameObject:
   m_ObjectHideFlags: 0

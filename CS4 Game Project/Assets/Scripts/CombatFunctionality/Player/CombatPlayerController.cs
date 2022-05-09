@@ -45,12 +45,16 @@ public class CombatPlayerController : MonoBehaviour
     private Vector2 savedPosition;
 
     private CombatPlayerAnimation combatPlayerAnim;
+    private CombatPlayerFighting combatPlayerFight;
+    private CombatPlayerHealth combatPlayerHealth;
 
     void Start()
     {
         rBody = GetComponent<Rigidbody2D>();
 
         combatPlayerAnim = GetComponent<CombatPlayerAnimation>();
+        combatPlayerFight = GetComponent<CombatPlayerFighting>();
+        combatPlayerHealth = GetComponent<CombatPlayerHealth>();
 
         currentJumpCharge = chargeJumpTime;
     }
@@ -121,6 +125,16 @@ public class CombatPlayerController : MonoBehaviour
         return 0f;
     }
 
+    public bool GetDashing()
+    {
+        return isDashing;
+    }
+
+    public bool GetGrounded()
+    {
+        return isGrounded;
+    }
+
     public void AttackLunge(float time, float force)
     {
         lungeInhibit = true;
@@ -149,6 +163,16 @@ public class CombatPlayerController : MonoBehaviour
 
     private void CalculateMovement()
     {
+        if (combatPlayerHealth)
+        {
+            if (combatPlayerHealth.GetStunned())
+            {
+                combatPlayerFight.SetInhibitAttacks(true);
+                return;
+            }
+        }
+        combatPlayerFight.SetInhibitAttacks(false);
+
         if (isGrounded)
         {
             //playerSound.SetPlayerMovementSpeed(0f);
@@ -183,10 +207,11 @@ public class CombatPlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(dashKey) && !isDashing)
-        {
+        {            
             currentPrewarm = dashPrewarm;
             isDashing = true;
             combatPlayerAnim.CallDash();
+            combatPlayerFight.SetInhibitAttacks(true);
             Invoke("EndDash", dashTime);
         }
         
@@ -219,5 +244,6 @@ public class CombatPlayerController : MonoBehaviour
     private void EndDash()
     {        
         isDashing = false;
+        combatPlayerFight.SetInhibitAttacks(false);
     }
 }

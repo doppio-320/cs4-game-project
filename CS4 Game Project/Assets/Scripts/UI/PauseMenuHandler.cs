@@ -28,7 +28,7 @@ public class PauseMenuHandler : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this);
         }
     }
 

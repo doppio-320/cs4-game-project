@@ -21,26 +21,40 @@ public class CombatCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = GetComponent<Camera>();
+        cam = transform.Find("Camera").GetComponent<Camera>();
 
         depthOffset = transform.position.z;
 
         heightOffset = transform.position.y - targets[0].position.y;
+
+        CalculateCamera(true);
     }
 
     private void LateUpdate()
+    {
+        CalculateCamera(false);
+    }
+
+    private void CalculateCamera(bool _instant)
     {
         if (targets.Count == 0)
             return;
 
         Vector3 centerPoint = GetCenterPoint();
 
-        Vector3 newPos = centerPoint + new Vector3(0f, 0f, depthOffset);
-
-        transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
-
-        float newZoom = Mathf.Lerp(minZoom, maxZoom, GetFurthestDistance() / zoomLimiter);        
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, newZoom, Time.deltaTime);
+        Vector3 newPos = centerPoint + new Vector3(0f, 0f, depthOffset);        
+        
+        float newZoom = Mathf.Lerp(minZoom, maxZoom, GetFurthestDistance() / zoomLimiter);
+        if(_instant)
+        {
+            cam.orthographicSize = newZoom;
+            transform.position = newPos;
+        }
+        else
+        {
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, newZoom, Time.deltaTime);
+            transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
+        }
     }
 
     private float GetFurthestDistance()

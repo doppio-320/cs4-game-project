@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b99f60d9af278c438a8168a9cc8d389
+guid: 5729ac049c14b3345ab7bc97e197d779
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -104,7 +104,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss_mom_idle_0
+      name: boss_mom_atk0_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,14 +118,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5069961b8431474f9dce958545490f8
-      internalID: 928475963
+      spriteID: e23bf2a1ce6e30849abe57ab50842ca2
+      internalID: -2065202534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_mom_idle_1
+      name: boss_mom_atk0_1
       rect:
         serializedVersion: 2
         x: 480
@@ -139,14 +139,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34cffa2ed5bf6d14fb0c8e805d625ce2
-      internalID: 1170604860
+      spriteID: f165082cb3e106d4a86bd56e1551bd93
+      internalID: 1942729931
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_mom_idle_2
+      name: boss_mom_atk0_2
       rect:
         serializedVersion: 2
         x: 960
@@ -160,14 +160,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28b38fbfa8524c546af65e52d67040f2
-      internalID: 1346481043
+      spriteID: cc766a75ace74da4d9facc056e574e31
+      internalID: 784481089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_mom_idle_3
+      name: boss_mom_atk0_3
       rect:
         serializedVersion: 2
         x: 1440
@@ -181,8 +181,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4608e1affb1ebca41911f3e2a727cca8
-      internalID: -1965180196
+      spriteID: 7562c84a0277f3847b9fa010ab30cb36
+      internalID: 922546594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_mom_atk0_4
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 480
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 042f83af81154434eba9e29d98c549b0
+      internalID: 789378439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_mom_atk0_5
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 0
+        width: 480
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd1109107876b8d49aa285351e3aaf3c
+      internalID: 1511818088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_mom_atk0_6
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 0
+        width: 480
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd3ecbeaab3b7d4d9e912df49128f7a
+      internalID: 878139417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_mom_atk0_7
+      rect:
+        serializedVersion: 2
+        x: 3360
+        y: 0
+        width: 480
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07c707ab151d11a4da779b4eba9a7dc8
+      internalID: 7959531
       vertices: []
       indices: 
       edges: []
@@ -198,10 +282,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      boss_mom_idle_3: -1965180196
-      boss_mom_idle_2: 1346481043
-      boss_mom_idle_1: 1170604860
-      boss_mom_idle_0: 928475963
+      boss_mom_atk0_3: 922546594
+      boss_mom_atk0_6: 878139417
+      boss_mom_atk0_1: 1942729931
+      boss_mom_atk0_2: 784481089
+      boss_mom_atk0_0: -2065202534
+      boss_mom_atk0_4: 789378439
+      boss_mom_atk0_5: 1511818088
+      boss_mom_atk0_7: 7959531
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

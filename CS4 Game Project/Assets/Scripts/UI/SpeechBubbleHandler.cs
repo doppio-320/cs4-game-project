@@ -23,12 +23,12 @@ public class SpeechBubbleHandler : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this);
         }
     }
 

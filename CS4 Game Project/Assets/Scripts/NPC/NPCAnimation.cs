@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPCAnimation : MonoBehaviour
 {
-    public float minimuzMoveSpeed;
+    public float minimumMoveSpeed;
 
     private GameObject visualsObject;
     private Animator animator;
@@ -42,7 +42,7 @@ public class NPCAnimation : MonoBehaviour
             }
         }
 
-        if(moveSpeed >= minimuzMoveSpeed)
+        if(moveSpeed >= minimumMoveSpeed)
         {
             animator.SetBool("IsWalking", true);
         }
@@ -64,9 +64,23 @@ public class NPCAnimation : MonoBehaviour
         }
     }
 
+
+    //Return if is right
+    public bool GetNPCDirectionIsRight()
+    {
+        if(visualsObject.transform.localScale.x == -1f)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public void SetNPCMovementSpeed(float _speed)
     {
         moveSpeed = Mathf.Abs(_speed);
-    }
+    }    
 }
  

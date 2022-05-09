@@ -19,15 +19,15 @@ public class DialogueHandler : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+            DontDestroyOnLoad(this);
+        }        
     }
 
     #endregion

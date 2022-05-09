@@ -28,7 +28,7 @@ public class TooltipHandler : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this);
         }
     }
 
