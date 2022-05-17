@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6412360b80b0b741b06ca53aee8f04a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: 
+  npcName: Your Angry Mom
   speechBubbleLocation: {fileID: 4558471857099286603}
 --- !u!114 &6380624538909348862
 MonoBehaviour:
@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  stoppingDistance: 1.85
+  stoppingDistance: 1.75
   movementSpeed: 1.5
   movementSmoothing: 0.135
   isGrounded: 0
@@ -334,15 +334,23 @@ MonoBehaviour:
   - attackDuration: 0.8333333
     attackDelay: 0.6
     attackRange: 1.75
+    delayUntilParryAvail: 0.475
     attackKnockback: {x: 0, y: 0}
     attackDamage: 90
   - attackDuration: 0.9166667
     attackDelay: 0.53333336
     attackRange: 2
+    delayUntilParryAvail: 0.5
     attackKnockback: {x: 7.5, y: 5}
     attackDamage: 150
   lastAttackCooldown: 0.95
   defaultHeath: 2000
+  currentHealth: 0
+  isStunned: 0
+  sustainStunDistance: 1.75
+  sustainStunDuration: 1
+  knockBackOnParry: {x: 3, y: 3}
+  canTakeParry: 0
 --- !u!1 &7845720422750508962
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ public class EnemyHealthDisplay : MonoBehaviour
 
     private Dictionary<string, GameObject> activeHealths;
 
-    private void Start()
+    private void OnEnable()
     {
         activeHealths = new Dictionary<string, GameObject>();
 

@@ -38,7 +38,7 @@ public class PlayerCombatHUD : MonoBehaviour
     [SerializeField] private float initialWidth;
     [SerializeField] private Text healthDisplay;
 
-    void Start()
+    void OnEnable()
     {
         primaryHudParent = transform.Find("PrimaryHUD");
 
@@ -46,12 +46,6 @@ public class PlayerCombatHUD : MonoBehaviour
         healthFill = playerHealthParent.Find("HP_Fill").GetComponent<RectTransform>();
         initialWidth = healthFill.rect.width;
         healthDisplay = playerHealthParent.Find("HP_Text").GetComponent<Text>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SetPlayerHealth(float _hp, float _max)

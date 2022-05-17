@@ -207,7 +207,14 @@ public class CombatPlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(dashKey) && !isDashing)
-        {            
+        {
+            var cpTools = GetComponent<CombatPlayerTools>();
+            if (cpTools)
+            {
+                if (!cpTools.UseDash())
+                    return;
+            }
+
             currentPrewarm = dashPrewarm;
             isDashing = true;
             combatPlayerAnim.CallDash();

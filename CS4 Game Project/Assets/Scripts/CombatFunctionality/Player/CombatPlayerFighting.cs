@@ -6,14 +6,22 @@ public class CombatPlayerFighting : MonoBehaviour
 {
     [System.Serializable]
     public class PlayerAttack
-    {
-        public float rawDamage;
+    {        
+        [Header("Timings")]
         public float attackRange;
         public float attackTime;        
         public float startHitscanTime;
         public float missHitscanTime;
         public float minimumNextAttack;
+
+        [Header("Camera Shake")]
+        public float shakeMagnitude;
+        public float shakeDuration;
+
+        [Header("Misc")]
+        public float rawDamage;
         public bool doesLunge;
+        public bool ableToParry;
         public int redirectIndex = -1;
     }
 
@@ -31,6 +39,7 @@ public class CombatPlayerFighting : MonoBehaviour
     public FightingState fightingState;
     public int attackIndex;
     public bool hitAvailable;
+    public bool doneCamShake;
     public bool didLunge;
     public float preAttackRemaining;
     public float attackRemaining;
@@ -113,13 +122,27 @@ public class CombatPlayerFighting : MonoBehaviour
                         var bBC = ray.transform.GetComponent<BossBasicCombat>();
                         if (bBC)
                         {
-                            bBC.Damage(attackSequence[attackIndex].rawDamage);
+                            if (bBC.ParryIsAvailable())
+                            {
+                                bBC.Parry();                                
+                            }
+                            else
+                            {
+                                bBC.Damage(attackSequence[attackIndex].rawDamage);
+                            }
+
                             hitAvailable = false;
                         }
                     }
                 }
 
-                if(!didLunge && attackSequence[attackIndex].doesLunge)
+                if (!doneCamShake)
+                {
+                    CameraShake.Instance.CallShake(attackSequence[attackIndex].shakeDuration, attackSequence[attackIndex].shakeMagnitude);
+                    doneCamShake = true;
+                }
+
+                if (!didLunge && attackSequence[attackIndex].doesLunge)
                 {
                     didLunge = true;
                     playerController.AttackLunge(tempDisableMovementTime, lungeForce);
@@ -159,8 +182,9 @@ public class CombatPlayerFighting : MonoBehaviour
     private void UpdateAttack()
     {
         attackRemaining = attackSequence[attackIndex].attackTime;
-        animator.SetTrigger("cb_atk" + attackIndex.ToString());
+        animator.SetTrigger("cb_atk" + attackIndex.ToString());        
         hitAvailable = true;
+        doneCamShake = false;
         didLunge = false;
     }
 }

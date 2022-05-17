@@ -16,10 +16,18 @@ public class CombatPlayerHealth : MonoBehaviour
     public bool isStunned;
     public float stunDisLeft;
     public float stunTimeLeft;
+    private Vector2 previousPos;
+
+    [Header("Misc: Camera Shake")]
+    public float lowerBoundShakeDuration = 0.2f;
+    public float upperBoundShakeDuration = 0.85f;
+    public float lowerBoundShakeMagnitude = 0.35f;
+    public float upperBoundShakeMagnitude = 1f;
+    public float lowerBoundDamage = 50f;
+    public float upperBoundDamage = 175f;
 
     private CombatPlayerController playerController;
-    private Rigidbody2D rBody;
-    private Vector2 previousPos;
+    private Rigidbody2D rBody;    
 
     public bool GetStunned()
     {
@@ -72,9 +80,21 @@ public class CombatPlayerHealth : MonoBehaviour
         if (IsDead())
         {
             Die();
-        }        
+        }
+
+        ApplyCameraShake(_dmg);
 
         PlayerCombatHUD.Instance.SetPlayerHealth(currentHealth, startingHealth);
+    }
+    
+    private void ApplyCameraShake(float _dmg)
+    {
+        float ratio = _dmg - lowerBoundDamage / (upperBoundDamage - lowerBoundDamage);
+
+        float mag = ratio * (upperBoundShakeMagnitude - lowerBoundShakeMagnitude) + lowerBoundShakeMagnitude;
+        float dur = ratio * (upperBoundShakeDuration - lowerBoundShakeDuration) + lowerBoundShakeDuration;
+
+        CameraShake.Instance.CallShake(dur, mag);
     }
 
     public void Die()

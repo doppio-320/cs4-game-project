@@ -11,10 +11,15 @@ public class BossBasicCombat : MonoBehaviour
     [System.Serializable]
     public class BossAttack
     {
+        [Header("Timings")]
         public float attackDuration;
         public float attackDelay;
         public float attackRange;
 
+        [Header("Parry")]
+        public float delayUntilParryAvail;
+
+        [Header("Damage")]
         public Vector2 attackKnockback;
         public float attackDamage;
     }
@@ -34,11 +39,33 @@ public class BossBasicCombat : MonoBehaviour
     public float defaultHeath;
     [SerializeField] private float currentHealth;
 
+    [Header("Stun")]
+    public bool isStunned;
+    public float sustainStunDistance;
+    public float sustainStunDuration;
+    private float stunDisLeft;
+    private float stunTimeLeft;
+    private Vector2 previousPos;
+
+    [Header("Parry")]
+    public Vector2 knockBackOnParry;
+    public bool canTakeParry;
+
     private NPCAnimation npcAnimation;
     private NPCMovement npcMovement;
     private Animator animator;
 
     private CombatPlayerHealth targetCPH;
+
+    public bool ParryIsAvailable()
+    {
+        return canTakeParry;
+    }
+
+    public bool IsAttacking()
+    {
+        return isInAttackPhase;
+    }
 
     private void Start()
     {
@@ -48,9 +75,10 @@ public class BossBasicCombat : MonoBehaviour
         attackHeightOffset = GetComponent<BoxCollider2D>().bounds.center.y;        
 
         currentHealth = defaultHeath;
-        EnemyHealthDisplay.Instance.SetHealth(GetComponent<NPCMain>().npcName, currentHealth, defaultHeath);
-
+        
         UpdateTarget(targetPlayer);
+
+        EnemyHealthDisplay.Instance.SetHealth(GetComponent<NPCMain>().npcName, currentHealth, defaultHeath);
     }
 
     public void UpdateTarget(GameObject _target)
@@ -69,6 +97,19 @@ public class BossBasicCombat : MonoBehaviour
 
         if (IsDead())
             return;
+
+        if (isStunned)
+        {
+            if (npcMovement.IsGrounded() && (stunDisLeft <= 0f || stunTimeLeft <= 0f))
+            {
+                UnStun();
+            }
+
+            stunDisLeft -= Vector2.Distance(new Vector2(transform.position.x, transform.position.y), previousPos);
+            stunTimeLeft -= Time.deltaTime;
+
+        }
+        previousPos = transform.position;
 
         if (!isInAttackPhase)
         {
@@ -130,18 +171,52 @@ public class BossBasicCombat : MonoBehaviour
             npcAnimation.SetNPCDirection(true, false);
         }
 
-        isInAttackPhase = true;        
+        isInAttackPhase = true;
+        canTakeParry = false;
         SetNPCScriptsStatus(false);
         attackRemaining = attackSequence[_idx].attackDuration;
         animator.SetBool("AttackActive", true);
         animator.SetTrigger("boss_atk" + _idx);
 
         Invoke("StartHitscan", attackSequence[_idx].attackDelay);
+        Invoke("StartAvailParry", attackSequence[_idx].delayUntilParryAvail);
+    }
+
+    public void Parry()
+    {
+        EndAttacking();
+        SetStunned();
+        ApplyParryKnockback();
+    }
+
+    private void ApplyParryKnockback()
+    {
+        var finalKB = knockBackOnParry;
+        if(animator.transform.localScale.x > 0)
+        {
+            finalKB.x = -finalKB.x;
+        }
+        GetComponent<Rigidbody2D>().velocity = finalKB;
+    }
+
+    private void SetStunned()
+    {
+        isStunned = true;        
+        npcMovement.enabled = false;
+
+        stunDisLeft = sustainStunDistance;
+        stunTimeLeft = sustainStunDuration;
+    }
+
+    private void UnStun()
+    {
+        isStunned = false;        
+        npcMovement.enabled = true;
     }
 
     private void StartHitscan()
     {
-        if (IsDead())
+        if (IsDead() || !isInAttackPhase)
             return;
 
         var ray = Physics2D.Raycast(GetComponent<BoxCollider2D>().bounds.center, attackingRight ? Vector2.right : Vector2.left, attackSequence[attackIndex].attackRange, playerLayer);
@@ -156,10 +231,19 @@ public class BossBasicCombat : MonoBehaviour
                     if (cpH)
                     {
                         ApplyAttackOnPlayer(cpH);
+                        canTakeParry = false;
                     }
                 }                
             }            
         }
+    }
+
+    private void StartAvailParry()
+    {
+        if (IsDead() || !isInAttackPhase)
+            return;
+
+        canTakeParry = true;
     }
 
     private void ApplyAttackOnPlayer(CombatPlayerHealth _playerHealth) 
@@ -182,6 +266,7 @@ public class BossBasicCombat : MonoBehaviour
         animator.SetBool("AttackActive", false);
         isInAttackPhase = false;
         attackIndex = 0;
+        canTakeParry = false;
 
         attackCooldown = lastAttackCooldown;
     }

@@ -42,6 +42,11 @@ public class NPCMovement : MonoBehaviour
         CalculateMovement();
     }
 
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
+
     private void GroundCheck()
     {
         isGrounded = false;
