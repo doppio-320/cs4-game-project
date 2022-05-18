@@ -24,8 +24,7 @@ public class CameraShake : MonoBehaviour
         }
         else
         {
-            instance = this;
-            DontDestroyOnLoad(this);
+            instance = this;            
         }
     }
 

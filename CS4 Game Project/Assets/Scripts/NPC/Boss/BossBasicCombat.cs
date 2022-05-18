@@ -53,6 +53,7 @@ public class BossBasicCombat : MonoBehaviour
 
     private NPCAnimation npcAnimation;
     private NPCMovement npcMovement;
+    private BossSpriteEffects spriteEffects;
     private Animator animator;
 
     private CombatPlayerHealth targetCPH;
@@ -71,7 +72,8 @@ public class BossBasicCombat : MonoBehaviour
     {
         npcAnimation = GetComponent<NPCAnimation>();
         npcMovement = GetComponent<NPCMovement>();
-        animator = transform.Find("Visuals").GetComponent<Animator>();        
+        animator = transform.Find("Visuals").GetComponent<Animator>();
+        spriteEffects = GetComponent<BossSpriteEffects>();
         attackHeightOffset = GetComponent<BoxCollider2D>().bounds.center.y;        
 
         currentHealth = defaultHeath;
@@ -177,6 +179,7 @@ public class BossBasicCombat : MonoBehaviour
         attackRemaining = attackSequence[_idx].attackDuration;
         animator.SetBool("AttackActive", true);
         animator.SetTrigger("boss_atk" + _idx);
+        spriteEffects.StartAnimation(_idx);
 
         Invoke("StartHitscan", attackSequence[_idx].attackDelay);
         Invoke("StartAvailParry", attackSequence[_idx].delayUntilParryAvail);
@@ -264,6 +267,7 @@ public class BossBasicCombat : MonoBehaviour
     {        
         SetNPCScriptsStatus(true);
         animator.SetBool("AttackActive", false);
+        spriteEffects.EndAnimation();
         isInAttackPhase = false;
         attackIndex = 0;
         canTakeParry = false;

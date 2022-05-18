@@ -46,7 +46,10 @@ public class CombatPlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        if(isStunned)
+        if (GameHandler.Instance.pauseState != PauseState.None && GameHandler.Instance.pauseState != PauseState.Cutscene)
+            return;
+
+        if (isStunned)
         {
             if (playerController.GetGrounded() && (stunDisLeft <= 0f || stunTimeLeft <= 0f))
             {

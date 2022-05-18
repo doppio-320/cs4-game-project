@@ -32,6 +32,9 @@ public class CombatCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (GameHandler.Instance.pauseState != PauseState.None && GameHandler.Instance.pauseState != PauseState.Cutscene)
+            return;
+
         CalculateCamera(false);
     }
 

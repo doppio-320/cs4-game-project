@@ -18,8 +18,11 @@ public class CombatPlayerAnimation : MonoBehaviour
     }
 
     private void Update()
-    {        
-        if(playerSpeed >= minimumMoveSpeed)
+    {
+        if (GameHandler.Instance.pauseState != PauseState.None && GameHandler.Instance.pauseState != PauseState.Cutscene)
+            return;
+
+        if (playerSpeed >= minimumMoveSpeed)
         {
             animator.SetBool("isRunning", true);
         }

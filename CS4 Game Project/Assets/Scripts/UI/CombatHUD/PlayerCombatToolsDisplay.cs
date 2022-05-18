@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCombatToolsDisplay : MonoBehaviour
 {
@@ -29,14 +30,22 @@ public class PlayerCombatToolsDisplay : MonoBehaviour
     }
     #endregion
 
-    void Start()
+    [Header("Dash Visuals")]
+    public GameObject darkenCover;
+    public Text visualText;
+
+    public void SetDashAvailable(bool _val)
     {
-        
+        darkenCover.SetActive(!_val);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetDashRemainingDashes(int _amt)
     {
-        
+        visualText.text = _amt.ToString() + "x";
+    }
+
+    public void SetDashCooldown(float _time)
+    {
+        visualText.text = _time.ToString("F1");
     }
 }
