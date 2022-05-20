@@ -20,11 +20,8 @@ public class Level1BossfightOutcomeHandler : MonoBehaviour
         combatPlayer.GetComponent<CombatPlayerHealth>().OnCombatPlayerDie += StartLoseSequence;
         momBoss.GetComponent<BossBasicCombat>().OnBossDied += StartVictorySequence;        
         cutsceneCameraReference = cutsceneCamera.GetComponent<Camera>();
-    }
 
-    private void Start()
-    {
-        DialogueHandler.Instance.OnDialogueEnded += StartVictoryFanfare;
+        DialogueHandler.Instance.OnDialogueEnded += StartVictoryFanfare;    
     }
 
     private void StartLoseSequence()

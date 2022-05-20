@@ -3073,6 +3073,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1119863357158415047, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1119863357158415067, guid: beee4aff30ee7724386bdfee9d436c6e, type: 3}
       propertyPath: m_Pivot.x
       value: 0

@@ -21,7 +21,7 @@ public class DialogueHandler : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
         else
         {
