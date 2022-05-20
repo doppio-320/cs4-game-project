@@ -48,9 +48,14 @@ public class PlayerCombatHUD : MonoBehaviour
         healthDisplay = playerHealthParent.Find("HP_Text").GetComponent<Text>();
     }
 
+    public void SetEnabled(bool _value)
+    {
+        primaryHudParent.gameObject.SetActive(_value);
+    }
+
     public void SetPlayerHealth(float _hp, float _max)
     {
-        healthDisplay.text = _hp.ToString();        
+        healthDisplay.text = ((int)_hp).ToString();        
 
         healthFill.sizeDelta = new Vector2(initialWidth * (_hp / _max), healthFill.sizeDelta.y);
     }

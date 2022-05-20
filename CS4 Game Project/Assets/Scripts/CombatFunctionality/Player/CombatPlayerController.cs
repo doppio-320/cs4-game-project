@@ -230,7 +230,7 @@ public class CombatPlayerController : MonoBehaviour
                 speed = movementSpeed;
                 currentPrewarm -= Time.deltaTime;
             }
-            Vector3 targetVelocity = new Vector3(isDashingRight ? 1f * speed : -1f * speed, 0);
+            Vector3 targetVelocity = new(isDashingRight ? 1f * speed : -1f * speed, 0);
             rBody.velocity = Vector3.SmoothDamp(rBody.velocity, targetVelocity, ref movementVelocity, movementSmoothing);
             rBody.velocity = new Vector2(rBody.velocity.x, 0);
         }
@@ -238,7 +238,7 @@ public class CombatPlayerController : MonoBehaviour
         {
             if(!lungeInhibit)
             {
-                Vector3 targetVelocity = new Vector3(GetLateralMovementDirection() * movementSpeed, rBody.velocity.y);
+                Vector3 targetVelocity = new(GetLateralMovementDirection() * movementSpeed, rBody.velocity.y);
                 rBody.velocity = Vector3.SmoothDamp(rBody.velocity, targetVelocity, ref movementVelocity, movementSmoothing);
             }
         }

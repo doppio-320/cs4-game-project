@@ -52,8 +52,7 @@ public class BossBasicCombat : MonoBehaviour
     public bool canTakeParry;
 
     private NPCAnimation npcAnimation;
-    private NPCMovement npcMovement;
-    private BossSpriteEffects spriteEffects;
+    private NPCMovement npcMovement;    
     private Animator animator;
 
     private CombatPlayerHealth targetCPH;
@@ -72,8 +71,7 @@ public class BossBasicCombat : MonoBehaviour
     {
         npcAnimation = GetComponent<NPCAnimation>();
         npcMovement = GetComponent<NPCMovement>();
-        animator = transform.Find("Visuals").GetComponent<Animator>();
-        spriteEffects = GetComponent<BossSpriteEffects>();
+        animator = transform.Find("Visuals").GetComponent<Animator>();        
         attackHeightOffset = GetComponent<BoxCollider2D>().bounds.center.y;        
 
         currentHealth = defaultHeath;
@@ -178,11 +176,15 @@ public class BossBasicCombat : MonoBehaviour
         SetNPCScriptsStatus(false);
         attackRemaining = attackSequence[_idx].attackDuration;
         animator.SetBool("AttackActive", true);
-        animator.SetTrigger("boss_atk" + _idx);
-        spriteEffects.StartAnimation(_idx);
+        animator.SetTrigger("boss_atk" + _idx);        
 
         Invoke("StartHitscan", attackSequence[_idx].attackDelay);
         Invoke("StartAvailParry", attackSequence[_idx].delayUntilParryAvail);
+
+        if(OnBossStartedAttack != null)
+        {
+            OnBossStartedAttack(attackIndex);
+        }
     }
 
     public void Parry()
@@ -228,13 +230,17 @@ public class BossBasicCombat : MonoBehaviour
             var cpC = ray.transform.GetComponent<CombatPlayerController>();
             if (cpC)
             {
-                if (!cpC.GetDashing())
+                var cpH = ray.transform.GetComponent<CombatPlayerHealth>();
+                if(cpH)
                 {
-                    var cpH = ray.transform.GetComponent<CombatPlayerHealth>();
-                    if (cpH)
+                    if (!cpC.GetDashing())
                     {
                         ApplyAttackOnPlayer(cpH);
                         canTakeParry = false;
+                    }
+                    else
+                    {
+                        cpH.Heal(attackSequence[attackIndex].attackDamage * cpH.dodgeHealRatio);
                     }
                 }                
             }            
@@ -261,13 +267,17 @@ public class BossBasicCombat : MonoBehaviour
             }
             _playerHealth.Knockback(knockBack);
         }
-    }
+    }    
 
     private void EndAttacking()
-    {        
+    {
+        if (OnBossEndedAttack != null)
+        {
+            OnBossEndedAttack(attackIndex);
+        }
+
         SetNPCScriptsStatus(true);
-        animator.SetBool("AttackActive", false);
-        spriteEffects.EndAnimation();
+        animator.SetBool("AttackActive", false);        
         isInAttackPhase = false;
         attackIndex = 0;
         canTakeParry = false;
@@ -312,6 +322,11 @@ public class BossBasicCombat : MonoBehaviour
         animator.SetBool("isDead", true);        
 
         currentHealth = 0f;
+
+        if(OnBossDied != null)
+        {
+            OnBossDied();
+        }
     }
 
     public void Revive()
@@ -329,4 +344,11 @@ public class BossBasicCombat : MonoBehaviour
         }
         else { return false; }
     }
+
+    public delegate void BossCombatEvent();
+    public BossCombatEvent OnBossDied;
+
+    public delegate void BossCombatFightingEvent(int _idx);
+    public BossCombatFightingEvent OnBossStartedAttack;
+    public BossCombatFightingEvent OnBossEndedAttack;
 }

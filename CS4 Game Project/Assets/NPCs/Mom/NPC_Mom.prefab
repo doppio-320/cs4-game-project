@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b24258f2c24e14d9071e2f24c6e583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimuzMoveSpeed: 0.1
+  minimumMoveSpeed: 0.1
 --- !u!114 &1033097388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6412360b80b0b741b06ca53aee8f04a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcName: 
   speechBubbleLocation: {fileID: 4558471857099286603}
 --- !u!1 &7845720422750508962
 GameObject:

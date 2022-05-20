@@ -47,6 +47,11 @@ public class EnemyHealthDisplay : MonoBehaviour
         initialWidth = enemyHealthTemplate.transform.Find("Background").Find("HP_Fill").GetComponent<RectTransform>().rect.width;
     }
 
+    public void SetEnabled(bool _value)
+    {
+        enemyInfoParent.gameObject.SetActive(_value);
+    }
+
     public void SetHealth(string _name, float _hp, float _max)
     {
         if (!activeHealths.ContainsKey(_name))
@@ -56,7 +61,7 @@ public class EnemyHealthDisplay : MonoBehaviour
             newObj.transform.Find("BossName").GetComponent<Text>().text = _name;
             var fill = newObj.transform.Find("Background").Find("HP_Fill");
             fill.GetComponent<RectTransform>().sizeDelta = new Vector2(initialWidth * (_hp / _max), fill.GetComponent<RectTransform>().sizeDelta.y);
-            newObj.transform.Find("Background").Find("HP_Text").GetComponent<Text>().text = _hp.ToString();
+            newObj.transform.Find("Background").Find("HP_Text").GetComponent<Text>().text = ((int)_hp).ToString();
             newObj.SetActive(true);
 
             activeHealths.Add(_name, newObj);
@@ -68,7 +73,7 @@ public class EnemyHealthDisplay : MonoBehaviour
             obj.transform.Find("BossName").GetComponent<Text>().text = _name;
             var fill = obj.transform.Find("Background").Find("HP_Fill");
             fill.GetComponent<RectTransform>().sizeDelta = new Vector2(initialWidth * (_hp / _max), fill.GetComponent<RectTransform>().sizeDelta.y);
-            obj.transform.Find("Background").Find("HP_Text").GetComponent<Text>().text = _hp.ToString();
+            obj.transform.Find("Background").Find("HP_Text").GetComponent<Text>().text = ((int)_hp).ToString();
             obj.SetActive(true);
 
             if(_hp <= 0f)

@@ -7,7 +7,7 @@ public class CombatPlayerHealth : MonoBehaviour
     [Header("General")]
     public float startingHealth = 1000f;
     public float sustainStunDistance;
-    public float sustainStunTime;
+    public float sustainStunTime;    
 
     [Header("Runtime")]
     public float currentHealth;
@@ -18,6 +18,9 @@ public class CombatPlayerHealth : MonoBehaviour
     public float stunTimeLeft;
     private Vector2 previousPos;
 
+    [Header("Misc")]
+    public float dodgeHealRatio;    
+
     [Header("Misc: Camera Shake")]
     public float lowerBoundShakeDuration = 0.2f;
     public float upperBoundShakeDuration = 0.85f;
@@ -27,7 +30,7 @@ public class CombatPlayerHealth : MonoBehaviour
     public float upperBoundDamage = 175f;
 
     private CombatPlayerController playerController;
-    private Rigidbody2D rBody;    
+    private Rigidbody2D rBody;
 
     public bool GetStunned()
     {
@@ -61,11 +64,6 @@ public class CombatPlayerHealth : MonoBehaviour
 
         }
         previousPos = transform.position;
-
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            Revive();
-        }
     }
 
     public bool IsDead()
@@ -80,6 +78,8 @@ public class CombatPlayerHealth : MonoBehaviour
 
         currentHealth -= _dmg;
 
+        DamageBloodscreen.Instance.ShowBloodScreenLinear();
+
         if (IsDead())
         {
             Die();
@@ -87,6 +87,16 @@ public class CombatPlayerHealth : MonoBehaviour
 
         ApplyCameraShake(_dmg);
 
+        PlayerCombatHUD.Instance.SetPlayerHealth(currentHealth, startingHealth);
+    }
+
+    public void Heal(float _hp)
+    {
+        currentHealth += _hp;
+        if(currentHealth > startingHealth)
+        {
+            currentHealth = startingHealth;
+        }
         PlayerCombatHUD.Instance.SetPlayerHealth(currentHealth, startingHealth);
     }
     
@@ -108,6 +118,11 @@ public class CombatPlayerHealth : MonoBehaviour
         transform.Find("Visuals").GetComponent<Animator>().SetBool("isDead", true);
 
         currentHealth = 0;
+
+        if(OnCombatPlayerDie != null)
+        {
+            OnCombatPlayerDie();
+        }
     }
 
     public void Revive()
@@ -134,4 +149,7 @@ public class CombatPlayerHealth : MonoBehaviour
         stunDisLeft = sustainStunDistance;
         stunTimeLeft = sustainStunTime;
     }
+
+    public delegate void CombatPlayerEvent();
+    public CombatPlayerEvent OnCombatPlayerDie;
 }
